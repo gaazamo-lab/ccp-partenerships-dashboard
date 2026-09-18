@@ -1,0 +1,15 @@
+{
+  "name": "@partner-crm/prettier-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
+  },
+  "peerDependencies": {
+    "prettier": "^3.0.0"
+  }
+}

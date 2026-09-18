@@ -1,0 +1,4 @@
+{
+  "extends": "@partner-crm/tsconfig/react-lib.json",
+  "include": ["src"]
+}

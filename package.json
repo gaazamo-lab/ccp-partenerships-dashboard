@@ -1,0 +1,30 @@
+{
+  "name": "partner-crm",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,css,yml,yaml}\"",
+    "clean": "turbo run clean"
+  },
+  "prettier": "@partner-crm/prettier-config",
+  "devDependencies": {
+    "@partner-crm/eslint-config": "workspace:*",
+    "@partner-crm/prettier-config": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "eslint": "^10.5.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.5.0",
+    "typescript": "~6.0.2"
+  }
+}

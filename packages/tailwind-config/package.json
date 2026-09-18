@@ -1,0 +1,15 @@
+{
+  "name": "@partner-crm/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./preset.css": "./preset.css"
+  },
+  "files": [
+    "preset.css"
+  ],
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  }
+}
