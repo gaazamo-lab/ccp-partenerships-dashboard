@@ -15,3 +15,19 @@ export interface PageMeta {
 export interface PaginatedEnvelope<T> extends ApiEnvelope<T[]> {
   meta: PageMeta;
 }
+
+/** Stable error body returned by every backend endpoint on failure. */
+export interface ApiErrorBody {
+  code: string;
+  message: string;
+  fieldErrors: Record<string, string[]>;
+  correlationId: string;
+}
+
+export * from './stakeholders';
+export * from './partnerships';
+export * from './consultations';
+export * from './kol';
+export * from './microsites';
+export * from './international';
+export * from './travel';

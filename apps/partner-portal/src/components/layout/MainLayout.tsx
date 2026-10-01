@@ -12,7 +12,6 @@ import {
   Sidebar,
   SidebarBrand,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -21,12 +20,13 @@ import {
   SidebarNav,
   Toaster,
 } from '@rfdtech/components';
-import { Handshake, LayoutDashboard } from 'lucide-react';
-
 import { useAuth } from '@partner-crm/auth';
+import { WorkspaceLaunchpad } from '@partner-crm/ui';
 import { initialsOf } from '@partner-crm/utils';
 
 import { ROUTES } from '@/constants/routes';
+
+import { NAV_GROUPS, isNavItemActive } from './navigation';
 
 export function MainLayout() {
   const { pathname } = useLocation();
@@ -46,6 +46,19 @@ export function MainLayout() {
         <AppHeaderSearch placeholder="Search Partner CRM" />
         <AppHeaderActions>
           <AppHeaderNotifications />
+          <WorkspaceLaunchpad current="partners" />
+          <ProfilePopover
+            user={{
+              name: profileName,
+              role: user?.role ?? 'CRM user',
+              email: user?.email,
+              initials: initialsOf(profileName),
+            }}
+            variant="full"
+            items={[]}
+            noConfirmSignOut
+            onSignOut={() => void handleSignOut()}
+          />
         </AppHeaderActions>
       </AppHeader>
 
@@ -53,43 +66,36 @@ export function MainLayout() {
         <Sidebar variant="primary">
           <SidebarHeader>
             <SidebarBrand
-              logo={<Handshake size={28} strokeWidth={1.75} aria-hidden />}
-              title="Partner CRM"
-              subtitle="Relationship workspace"
+              logo={<img src="/clet-logo.png" alt="" width={28} height={28} />}
+              title="CCP Partnerships"
+              subtitle="Stakeholders & agreements"
             />
           </SidebarHeader>
 
           <SidebarContent>
-            <SidebarNav aria-label="Partner CRM navigation">
-              <SidebarGroup>
-                <SidebarGroupLabel>Workspace</SidebarGroupLabel>
-                <SidebarItem>
-                  <SidebarLink
-                    to={ROUTES.HOME}
-                    active={pathname === ROUTES.HOME}
-                    icon={<LayoutDashboard size={18} strokeWidth={1.75} aria-hidden />}
-                  >
-                    Overview
-                  </SidebarLink>
-                </SidebarItem>
-              </SidebarGroup>
+            <SidebarNav aria-label="CCP Partnerships navigation">
+              {NAV_GROUPS.map((group) => (
+                <SidebarGroup key={group.label} collapsible defaultExpanded>
+                  <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+                  {group.items.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <SidebarItem key={item.to}>
+                        <SidebarLink
+                          to={item.to}
+                          active={isNavItemActive(item, pathname)}
+                          icon={<Icon size={18} strokeWidth={1.75} aria-hidden />}
+                        >
+                          {item.label}
+                        </SidebarLink>
+                      </SidebarItem>
+                    );
+                  })}
+                </SidebarGroup>
+              ))}
             </SidebarNav>
           </SidebarContent>
 
-          <SidebarFooter>
-            <ProfilePopover
-              user={{
-                name: profileName,
-                role: user?.role ?? 'CRM user',
-                email: user?.email,
-                initials: initialsOf(profileName),
-              }}
-              variant="full"
-              items={[]}
-              noConfirmSignOut
-              onSignOut={() => void handleSignOut()}
-            />
-          </SidebarFooter>
         </Sidebar>
       </AppSidebar>
 

@@ -33,6 +33,15 @@ async function readBody(response: Response): Promise<unknown> {
   return contentType.includes('application/json') ? response.json() : response.text();
 }
 
+/** Prefers the server's own `message` (see `ApiErrorBody`) over a bare status line. */
+function errorMessage(body: unknown, status: number): string {
+  if (body && typeof body === 'object' && 'message' in body) {
+    const message = (body as { message: unknown }).message;
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  return `Request failed with status ${status}`;
+}
+
 export function createApiClient({ baseUrl, fetcher = fetch }: ApiClientOptions): ApiClient {
   return {
     async request<T>(path: string, options: RequestOptions = {}) {
@@ -48,10 +57,19 @@ export function createApiClient({ baseUrl, fetcher = fetch }: ApiClientOptions):
       const body = await readBody(response);
 
       if (!response.ok) {
-        throw new ApiError(`Request failed with status ${response.status}`, response.status, body);
+        throw new ApiError(errorMessage(body, response.status), response.status, body);
       }
 
       return body as T;
     },
   };
 }
+
+export * from './stakeholders';
+export * from './partnerships';
+export * from './consultations';
+export * from './kol';
+export * from './microsites';
+export * from './international';
+export * from './travel';
+export { queryString } from './query';

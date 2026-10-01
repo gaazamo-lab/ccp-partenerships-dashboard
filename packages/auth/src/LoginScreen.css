@@ -1,0 +1,129 @@
+/* Sign-in hero layout, matching the GSL starter's LoginScreen. Component
+   styling comes from @rfdtech/components; these rules are page layout only.
+   `/login-hero.avif` and `/clet-logo.png` are public-root references, so every
+   consuming app ships both files in its own `public/` folder. */
+.pcrm-landing {
+  display: flex;
+  min-height: 100vh;
+  font-family: var(--clet-font-body);
+}
+
+.pcrm-landing__media {
+  position: relative;
+  flex: 1 1 auto;
+  background-image: url('/login-hero.avif');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.pcrm-landing__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 20%,
+    rgba(0, 0, 0, 0.55) 55%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+.pcrm-landing__caption {
+  position: absolute;
+  left: 3rem;
+  bottom: 3rem;
+  z-index: 1;
+  color: #fff;
+}
+
+.pcrm-landing__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d3af37;
+}
+
+.pcrm-landing__title {
+  margin: 0;
+  font-size: 2.3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.pcrm-landing__panel {
+  flex: 0 0 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--clet-bg, #fff);
+}
+
+.pcrm-landing__content {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pcrm-landing__logo {
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  margin-left: -1rem;
+}
+
+.pcrm-landing__heading {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--clet-text);
+}
+
+.pcrm-landing__desc {
+  width: 100%;
+  margin: 0 0 2rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--clet-text-secondary);
+}
+
+.pcrm-landing__signin {
+  background: #0b1f3d;
+}
+
+.pcrm-landing__footer {
+  width: 100%;
+  margin: 1.5rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--clet-border-subtle, #ececef);
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--clet-text-secondary);
+}
+
+.pcrm-landing__note {
+  width: 100%;
+  margin: 1.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--clet-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .pcrm-landing__media {
+    display: none;
+  }
+
+  .pcrm-landing__panel {
+    flex: 1 1 auto;
+  }
+}

@@ -1,24 +1,13 @@
+/**
+ * Full Tailwind preset for Partner CRM apps. Import a single line in an app's
+ * index.css:
+ *   @import '@partner-crm/tailwind-config/preset.css';
+ * It pulls in Tailwind, the `@rfdtech/components` styles and the shared design
+ * tokens, and tells Tailwind to scan the shared packages that render markup.
+ */
 @import 'tailwindcss';
 @import '@rfdtech/components/style.css';
+@import './theme.css';
 
 @source '../ui/src/**/*.{ts,tsx}';
 @source '../auth/src/**/*.{ts,tsx}';
-
-@utility gap-body {
-  gap: var(--clet-app-layout-body-gap, 1.5rem);
-}
-
-html,
-body {
-  background-color: var(--clet-page-bg);
-  color: var(--clet-text);
-}
-
-.clet-app-layout__main,
-.clet-app-layout__body {
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-}

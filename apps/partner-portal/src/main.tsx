@@ -6,6 +6,9 @@ import { AuthProvider } from '@partner-crm/auth';
 import { AppProviders } from '@partner-crm/ui';
 
 import { authClient } from '@/config/auth';
+import { KolProvider } from '@/features/kol/state/KolProvider';
+import { PartnershipsProvider } from '@/features/partnerships/state/PartnershipsProvider';
+import { CrmProvider } from '@/features/stakeholders/state/CrmContext';
 import { router } from '@/routes/router';
 
 import './index.css';
@@ -18,7 +21,13 @@ createRoot(rootElement).render(
   <StrictMode>
     <AppProviders>
       <AuthProvider client={authClient}>
-        <RouterProvider router={router} />
+        <CrmProvider>
+          <PartnershipsProvider>
+            <KolProvider>
+              <RouterProvider router={router} />
+            </KolProvider>
+          </PartnershipsProvider>
+        </CrmProvider>
       </AuthProvider>
     </AppProviders>
   </StrictMode>,

@@ -1,0 +1,5 @@
+{
+  "extends": "@partner-crm/tsconfig/react-app.json",
+  "compilerOptions": { "paths": { "@/*": ["./src/*"] } },
+  "include": ["src"]
+}

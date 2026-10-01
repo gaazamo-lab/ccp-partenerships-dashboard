@@ -9,6 +9,10 @@ export default defineConfig({
     alias: { '@': path.resolve(import.meta.dirname, './src') },
     dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
   },
-  server: { port: 5175 },
+  server: {
+    port: 5175,
+    // Same-origin API in development so the HTTP-only session cookie applies.
+    proxy: { '/api': 'http://localhost:8000' },
+  },
   build: { sourcemap: true },
 });

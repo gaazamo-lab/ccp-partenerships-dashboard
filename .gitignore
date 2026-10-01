@@ -1,11 +1,32 @@
+# Dependencies
 node_modules/
+
+# Build output and caches
 dist/
 .turbo/
-.ai/
 coverage/
+*.tsbuildinfo
+
+# Environment (real values never committed; examples are)
 .env
 .env.*
 !.env.example
 !.env.*.example
-.DS_Store
+
+# Logs
 *.log
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local agent and tooling scratch
+.ai/
+.tmp/
+.playwright-mcp/
+
+# Source requirement documents (SRS, PRD, signed MOUs) and scratch screenshots: kept locally only
+/Files/
+/S081-01*.png

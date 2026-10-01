@@ -1,0 +1,316 @@
+/**
+ * Partner CRM design tokens layered on top of `@rfdtech/components`.
+ *
+ * The library already maps the standard tokens (`primary`, `foreground`,
+ * `border`, `muted`, `success`…). This file adds the ones the apps use that the
+ * library does not ship — without them `text-foreground-muted` and
+ * `bg-surface-subtle` compile to nothing. Values follow the GSL starter.
+ */
+
+:root {
+  --pcrm-primary-light: #e3edf3;
+  /* gray-500: the starter's muted text. The library's own `--clet-text-muted`
+     (#9ca3af) is below WCAG AA contrast on white, so body copy uses this. */
+  --pcrm-text-muted: #6b7280;
+  --pcrm-accent: #0d9488;
+  --pcrm-accent-dark: #0f766e;
+  --pcrm-page-bg: var(--clet-bg, #fff);
+  --pcrm-success-bg: #ecfdf5;
+  --pcrm-warning-bg: #fffbeb;
+  --pcrm-error-bg: #fef2f2;
+  --pcrm-focus: var(--clet-primary);
+
+  /* Form controls: soft grey fill, hairline border, generous height. */
+  --pcrm-field-height: 46px;
+  --pcrm-field-radius: 10px;
+  --pcrm-field-bg: #f9f9fa;
+  --pcrm-field-border: #e3e4e8;
+  --pcrm-field-border-hover: #cfd1d6;
+  --pcrm-field-placeholder: #868b93;
+  --pcrm-field-label: #1f2328;
+}
+
+:root[data-clet-theme='dark'],
+:root.dark {
+  --pcrm-primary-light: #16232e;
+  --pcrm-text-muted: #94a3b8;
+  --pcrm-accent: #14b8a6;
+  --pcrm-accent-dark: #0d9488;
+  --pcrm-success-bg: #064e3b;
+  --pcrm-warning-bg: #78350f;
+  --pcrm-error-bg: #7f1d1d;
+
+  --pcrm-field-bg: #262626;
+  --pcrm-field-border: #3c4043;
+  --pcrm-field-border-hover: #5f6368;
+  --pcrm-field-placeholder: #80868b;
+  --pcrm-field-label: #e8eaed;
+}
+
+@theme {
+  --color-surface: var(--clet-bg);
+  --color-surface-subtle: var(--clet-surface-subtle);
+  --color-surface-muted: var(--clet-surface-dark);
+  --color-surface-panel: var(--clet-surface-panel);
+
+  --color-foreground-secondary: var(--clet-text-secondary);
+  --color-foreground-muted: var(--pcrm-text-muted);
+
+  --color-primary-light: var(--pcrm-primary-light);
+  --color-brand: var(--clet-primary);
+  --color-brand-gold: var(--clet-secondary);
+  --color-accent: var(--pcrm-accent);
+  --color-accent-dark: var(--pcrm-accent-dark);
+
+  --color-border-strong: var(--clet-border-strong);
+  --color-hover: var(--clet-hover);
+  --color-focus: var(--pcrm-focus);
+
+  --color-success-bg: var(--pcrm-success-bg);
+  --color-warning-bg: var(--pcrm-warning-bg);
+  --color-error-bg: var(--pcrm-error-bg);
+}
+
+/** Radial brand wash used behind full-bleed hero areas. */
+@utility landing-overlay {
+  background: radial-gradient(
+    ellipse 120% 150% at right bottom,
+    var(--clet-primary) 40%,
+    color-mix(in srgb, var(--clet-primary) 12%, transparent) 100%
+  );
+}
+
+/**
+ * Vertical rhythm between a page's stacked sections. The library sets
+ * `--clet-app-layout-body-gap` to 1rem, which reads cramped next to the
+ * starter's 1.5rem — so this utility deliberately does not inherit it.
+ */
+@utility gap-body {
+  gap: 1.5rem;
+}
+
+@utility scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility centered {
+  @apply flex items-center justify-center;
+}
+
+@utility shadow-primary {
+  box-shadow: 0 4px 14px 0 color-mix(in srgb, var(--clet-primary) 20%, transparent);
+}
+
+html,
+body {
+  background-color: var(--pcrm-page-bg);
+  color: var(--clet-text);
+}
+
+.clet-app-layout__main,
+.clet-app-layout__body {
+  position: relative;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.clet-app-layout__main::-webkit-scrollbar,
+.clet-app-layout__body::-webkit-scrollbar {
+  display: block;
+  width: 10px;
+}
+
+.clet-app-layout__main::-webkit-scrollbar-thumb,
+.clet-app-layout__body::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+  background-color: rgb(156 163 175 / 70%);
+}
+
+.clet-app-layout__main::-webkit-scrollbar-track,
+.clet-app-layout__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* The library leaves outline buttons transparent on hover; the starter gives
+   them a light primary wash so the hover state is visible. */
+.clet-button--outline {
+  background: transparent;
+}
+
+.clet-button--outline:hover:not(:disabled) {
+  background: var(--pcrm-primary-light);
+}
+
+/*
+ * Form controls.
+ *
+ * Every labelled field (`.clet-field`) gets the same look: a 46px control with
+ * a soft grey fill and hairline border, a white multi-line textarea, and a
+ * clear label above. Scoped to `.clet-field` so table search boxes and filter
+ * bars keep their compact library styling.
+ *
+ * Specificity is deliberate: base (0,2,0) < hover = focus = disabled (0,3,0,
+ * in that source order) < invalid (0,3,0+, declared after hover).
+ */
+.clet-field {
+  gap: 8px;
+}
+
+.clet-field__label {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--pcrm-field-label);
+}
+
+.clet-field__description,
+.clet-field__error {
+  font-size: 13px;
+}
+
+.clet-field
+  :is(
+    .clet-input,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ) {
+  height: var(--pcrm-field-height);
+  padding-inline: 16px;
+  border: 1px solid var(--pcrm-field-border);
+  border-radius: var(--pcrm-field-radius);
+  background-color: var(--pcrm-field-bg);
+  font-size: 15px;
+  color: var(--clet-text);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* Room for the chevron on the select-style triggers. */
+.clet-field :is(.clet-dropdown__trigger, .clet-combobox__trigger) {
+  padding-right: 42px;
+}
+
+.clet-field :is(.clet-dropdown__trigger-icon, .clet-combobox__chevron) {
+  right: 16px;
+}
+
+.clet-field .clet-textarea {
+  min-height: 140px;
+  padding: 14px 16px 30px;
+  border: 1px solid var(--pcrm-field-border);
+  border-radius: 12px;
+  background-color: var(--clet-bg);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--clet-text);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.clet-field :is(.clet-input, .clet-textarea)::placeholder {
+  color: var(--pcrm-field-placeholder);
+  opacity: 1;
+}
+
+.clet-field .clet-dropdown__trigger--placeholder,
+.clet-field .clet-combobox__trigger-text--placeholder,
+.clet-field .clet-date-selector__trigger--placeholder .clet-date-selector__trigger-text {
+  color: var(--pcrm-field-placeholder);
+}
+
+.clet-field
+  :is(
+    .clet-input,
+    .clet-textarea,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ):hover {
+  border-color: var(--pcrm-field-border-hover);
+}
+
+.clet-field :is(.clet-dropdown__trigger, .clet-combobox__trigger):hover {
+  background-color: var(--pcrm-field-bg);
+}
+
+.clet-field
+  :is(
+    .clet-input,
+    .clet-textarea,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ):is(:focus-visible, [data-state='open'], [aria-expanded='true']) {
+  outline: none;
+  border-color: var(--clet-primary);
+  background-color: var(--clet-bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clet-primary) 14%, transparent);
+}
+
+.clet-field
+  :is(
+    .clet-input,
+    .clet-textarea,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ):disabled {
+  border-color: var(--pcrm-field-border);
+  background-color: var(--clet-hover);
+  color: var(--clet-text-muted);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.clet-field.clet-field--invalid
+  :is(
+    .clet-input,
+    .clet-textarea,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ) {
+  border-color: var(--clet-error);
+}
+
+.clet-field.clet-field--invalid
+  :is(
+    .clet-input,
+    .clet-textarea,
+    .clet-dropdown__trigger,
+    .clet-combobox__trigger,
+    .clet-date-selector__trigger,
+    .clet-date-range-selector__trigger,
+    .clet-time-selector__trigger,
+    .clet-country-selector__trigger
+  ):is(:focus-visible, [data-state='open'], [aria-expanded='true']) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clet-error) 14%, transparent);
+}
